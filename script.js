@@ -115,5 +115,18 @@ document.addEventListener("keydown", (e) => {
 // Кнопка "Начать заново"
 document.getElementById("restart").addEventListener("click", initGame);
 
+// Управление с кнопок на телефоне
+document.getElementById("up").addEventListener("click", () => movePlayer(0, -1));
+document.getElementById("down").addEventListener("click", () => movePlayer(0, 1));
+document.getElementById("left").addEventListener("click", () => movePlayer(-1, 0));
+document.getElementById("right").addEventListener("click", () => movePlayer(1, 0));
+
+// Отключаем скролл при нажатии на кнопки
+document.querySelectorAll('.ctrl-btn').forEach(btn => {
+  btn.addEventListener('touchstart', e => {
+    e.preventDefault(); // Предотвращаем скролл
+  });
+});
+
 // Запуск игры при загрузке
 window.onload = initGame;
