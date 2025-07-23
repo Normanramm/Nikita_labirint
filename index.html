@@ -2,27 +2,28 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Лабиринт</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Лабиринт Никиты Т.</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<!-- Управление для мобильных устройств -->
-<div class="mobile-controls">
-  <button id="up" class="ctrl-btn">↑</button>
-  <button id="left" class="ctrl-btn">←</button>
-  <button id="down" class="ctrl-btn">↓</button>
-  <button id="right" class="ctrl-btn">→</button>
-</div>
 <body>
   <div class="container">
-    <h1>Игра "Никита ищет свой путь"</h1>
-    <p>Найди выход (E)! Управление: стрелки на клавиатуре</p>
+    <h1>Игра " Про Никиту Т."</h1>
+    <p>Найди выход (E)! Управление: стрелки на клавиатуре или кнопки на экране</p>
     <p>Шагов: <span id="steps">0</span></p>
 
     <div id="maze"></div>
 
     <div id="message"></div>
     <button id="restart">Начать заново</button>
+  </div>
+
+  <!-- Мобильное управление -->
+  <div class="mobile-controls">
+    <button id="up" class="ctrl-btn">↑</button>
+    <button id="left" class="ctrl-btn">←</button>
+    <button id="down" class="ctrl-btn">↓</button>
+    <button id="right" class="ctrl-btn">→</button>
   </div>
 
   <script src="script.js"></script>
