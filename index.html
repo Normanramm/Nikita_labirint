@@ -3,22 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Лабиринт Никиты Т.</title>
+  <title>Лабиринт</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>Игра " Про Никиту Т."</h1>
+    <h1>Игра "Путь в Никиту"</h1>
     <p>Найди выход (E)! Управление: стрелки на клавиатуре или кнопки на экране</p>
-    <p>Шагов: <span id="steps">0</span></p>
+    <p>Шагов гойды: <span id="steps">0</span></p>
 
     <div id="maze"></div>
 
-    <div id="message"></div>
     <button id="restart">Начать заново</button>
   </div>
 
-  <!-- Мобильное управление -->
+  <!-- Мобильное управление — можно перетаскивать -->
   <div class="mobile-controls">
     <button id="up" class="ctrl-btn">↑</button>
     <button id="left" class="ctrl-btn">←</button>
@@ -26,7 +25,16 @@
     <button id="right" class="ctrl-btn">→</button>
   </div>
 
+  <!-- Полноэкранное окно победы -->
+  <div id="victory-screen" class="victory-screen hidden">
+    <div class="victory-content">
+      <h2>🎉 Поздравляем!</h2>
+      <p>Ты додик-гей!</p>
+      <p>Шагов: <span id="final-steps">0</span></p>
+      <button id="play-again">Играть снова</button>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
-
