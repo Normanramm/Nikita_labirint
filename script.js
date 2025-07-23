@@ -1,4 +1,4 @@
-// Лабиринт (0 = путь, 1 = стена, 'S' = старт, 'E' = выход)
+// Лабиринт
 const mazeTemplate = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   [1, 'S', 0, 0, 1, 0, 0, 0, 0, 1],
@@ -12,13 +12,16 @@ const mazeTemplate = [
 ];
 
 let maze = [];
-let player = { x: 1, y: 1 }; // Начальная позиция (S)
+let player = { x: 1, y: 1 };
 let steps = 0;
 let gameWon = false;
 
+// Звук победы
+const winSound = document.getElementById("win-sound");
+
 // Инициализация игры
 function initGame() {
-  maze = mazeTemplate.map(row => [...row]); // Копия
+  maze = mazeTemplate.map(row => [...row]);
   player = { x: 1, y: 1 };
   steps = 0;
   gameWon = false;
@@ -60,14 +63,14 @@ function renderMaze() {
   }
 }
 
-// Проверка, можно ли пойти в клетку
+// Проверка движения
 function canMove(x, y) {
   if (y < 0 || y >= maze.length || x < 0 || x >= maze[0].length) return false;
   const cell = maze[y][x];
-  return cell === 0 || cell === 'E'; // Путь или выход
+  return cell === 0 || cell === 'E';
 }
 
-// Движение игрока
+// Движение
 function movePlayer(dx, dy) {
   if (gameWon) return;
 
@@ -84,13 +87,15 @@ function movePlayer(dx, dy) {
       gameWon = true;
       document.getElementById("final-steps").textContent = steps;
       document.getElementById("victory-screen").classList.add("visible");
+      winSound.currentTime = 0; // Перезапуск звука
+      winSound.play().catch(e => console.log("Звук заблокирован:", e));
     }
 
     renderMaze();
   }
 }
 
-// Обработка клавиш (ПК)
+// Управление с клавиатуры
 document.addEventListener("keydown", (e) => {
   switch (e.key) {
     case "ArrowUp":
@@ -124,32 +129,18 @@ function setupMobileControls() {
   const handleLeft = () => movePlayer(-1, 0);
   const handleRight = () => movePlayer(1, 0);
 
-  // touchstart
-  upBtn.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    handleUp();
-  });
-  downBtn.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    handleDown();
-  });
-  leftBtn.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    handleLeft();
-  });
-  rightBtn.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    handleRight();
-  });
+  upBtn.addEventListener("touchstart", (e) => { e.preventDefault(); handleUp(); }, { passive: false });
+  downBtn.addEventListener("touchstart", (e) => { e.preventDefault(); handleDown(); }, { passive: false });
+  leftBtn.addEventListener("touchstart", (e) => { e.preventDefault(); handleLeft(); }, { passive: false });
+  rightBtn.addEventListener("touchstart", (e) => { e.preventDefault(); handleRight(); }, { passive: false });
 
-  // click (для теста на ПК)
   upBtn.addEventListener("click", handleUp);
   downBtn.addEventListener("click", handleDown);
   leftBtn.addEventListener("click", handleLeft);
   rightBtn.addEventListener("click", handleRight);
 }
 
-// Сделать блок управления перетаскиваемым
+// Перетаскивание панели
 function makeDraggable(element) {
   let pos = { x: 0, y: 0, startX: 0, startY: 0 };
 
@@ -193,20 +184,48 @@ function makeDraggable(element) {
   });
 }
 
-// Кнопка "Начать заново"
+// Тема день/ночь
+function setupThemeToggle() {
+  const body = document.body;
+  const themeBtn = document.getElementById("theme-toggle");
+
+  // Проверяем сохранённую тему
+  const savedTheme = localStorage.getItem("theme") || "light";
+  if (savedTheme === "dark") {
+    body.classList.remove("light-theme");
+    body.classList.add("dark-theme");
+    themeBtn.textContent = "☀️ День";
+  }
+
+  themeBtn.addEventListener("click", () => {
+    if (body.classList.contains("dark-theme")) {
+      body.classList.remove("dark-theme");
+      body.classList.add("light-theme");
+      themeBtn.textContent = "🌙 голубая луна";
+      localStorage.setItem("theme", "light");
+    } else {
+      body.classList.remove("light-theme");
+      body.classList.add("dark-theme");
+      themeBtn.textContent = "☀️ потный день";
+      localStorage.setItem("theme", "dark");
+    }
+  });
+}
+
+// Кнопки
 document.getElementById("restart").addEventListener("click", () => {
   initGame();
 });
 
-// Кнопка "Играть снова"
 document.getElementById("play-again").addEventListener("click", () => {
   document.getElementById("victory-screen").classList.remove("visible");
   initGame();
 });
 
-// Запуск игры
+// Запуск
 window.onload = function () {
   initGame();
   setupMobileControls();
   makeDraggable(document.querySelector(".mobile-controls"));
+  setupThemeToggle();
 };
