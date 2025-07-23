@@ -1,0 +1,85 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+#maze {
+  display: inline-grid;
+  grid-template-columns: repeat(10, 40px);
+  grid-template-rows: repeat(9, 40px);
+  gap: 1px;
+  margin: 20px auto;
+}
+
+.cell {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 4px;
+}
+
+.wall {
+  background-color: #333;
+}
+
+.path {
+  background-color: #ddd;
+}
+
+.start {
+  background-color: #4caf50;
+  color: white;
+}
+
+.exit {
+  background-color: #f44336;
+  color: white;
+}
+
+.player {
+  background-color: #2196f3;
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+}
+
+#message {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 10px 0;
+  height: 30px;
+  color: #d81b60;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #388e3c;
+}
