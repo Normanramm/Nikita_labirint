@@ -6,18 +6,19 @@
   <title>Лабиринт</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="light-theme">
   <div class="container">
-    <h1>Игра "Путь в Никиту"</h1>
+    <h1>Игра "Путь Никиты"</h1>
     <p>Найди выход (E)! Управление: стрелки на клавиатуре или кнопки на экране</p>
     <p>Шагов гойды: <span id="steps">0</span></p>
 
     <div id="maze"></div>
 
     <button id="restart">Начать заново</button>
+    <button id="theme-toggle">🌙 гейская ночь</button>
   </div>
 
-  <!-- Мобильное управление — можно перетаскивать -->
+  <!-- Мобильное управление -->
   <div class="mobile-controls">
     <button id="up" class="ctrl-btn">↑</button>
     <button id="left" class="ctrl-btn">←</button>
@@ -29,11 +30,14 @@
   <div id="victory-screen" class="victory-screen hidden">
     <div class="victory-content">
       <h2>🎉 Поздравляем!</h2>
-      <p>Ты додик-гей!</p>
-      <p>Шагов: <span id="final-steps">0</span></p>
+      <p>ТЫ ДОДИК-ГЕЙ!</p>
+      <p>Шагов гойды: <span id="final-steps">0</span></p>
       <button id="play-again">Играть снова</button>
     </div>
   </div>
+
+  <!-- Звук победы -->
+  <audio id="win-sound" src="https://www.soundjay.com/buttons/sounds/button-19.mp3 " preload="auto"></audio>
 
   <script src="script.js"></script>
 </body>
