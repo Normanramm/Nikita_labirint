@@ -6,20 +6,49 @@
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
   text-align: center;
   margin: 0;
   padding: 20px;
   touch-action: manipulation;
+  transition: background-color 0.5s, color 0.5s;
+}
+
+/* Тема День */
+.light-theme {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.light-theme .container {
+  background: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Тема Ночь */
+.dark-theme {
+  background-color: #121212;
+  color: #eee;
+}
+
+.dark-theme .container {
+  background: #1e1e1e;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.dark-theme .cell {
+  filter: brightness(0.9);
+}
+
+.dark-theme .ctrl-btn {
+  background-color: #1976d2;
 }
 
 .container {
   max-width: 600px;
   margin: 0 auto;
-  background: white;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.5s;
 }
 
 #maze {
@@ -28,9 +57,17 @@ body {
   grid-template-rows: repeat(9, 40px);
   gap: 1px;
   margin: 20px auto;
-  background-color: #333;
   border-radius: 8px;
   padding: 5px;
+  transition: background-color 0.5s;
+}
+
+.light-theme #maze {
+  background-color: #333;
+}
+
+.dark-theme #maze {
+  background-color: #111;
 }
 
 .cell {
@@ -42,6 +79,7 @@ body {
   font-weight: bold;
   font-size: 18px;
   border-radius: 4px;
+  transition: all 0.3s;
 }
 
 .wall {
@@ -49,8 +87,16 @@ body {
   color: white;
 }
 
+.dark-theme .wall {
+  background-color: #aaa;
+}
+
 .path {
   background-color: #ddd;
+}
+
+.dark-theme .path {
+  background-color: #444;
 }
 
 .start {
@@ -81,13 +127,14 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 button:hover {
   background-color: #388e3c;
 }
 
-/* Мобильное управление — маленькие и перетаскиваемые стрелки */
+/* Мобильное управление */
 .mobile-controls {
   position: fixed;
   bottom: 20px;
@@ -105,6 +152,11 @@ button:hover {
   height: 140px;
   user-select: none;
   cursor: move;
+  transition: background-color 0.5s;
+}
+
+.dark-theme .mobile-controls {
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .ctrl-btn {
@@ -127,20 +179,17 @@ button:hover {
   transform: scale(0.9);
 }
 
-/* Расположение стрелок в сетке */
-.ctrl-btn:nth-child(1) { grid-column: 2; grid-row: 1; } /* Вверх */
-.ctrl-btn:nth-child(2) { grid-column: 1; grid-row: 2; } /* Влево */
-.ctrl-btn:nth-child(3) { grid-column: 2; grid-row: 2; } /* Вниз */
-.ctrl-btn:nth-child(4) { grid-column: 3; grid-row: 2; } /* Вправо */
+.ctrl-btn:nth-child(1) { grid-column: 2; grid-row: 1; }
+.ctrl-btn:nth-child(2) { grid-column: 1; grid-row: 2; }
+.ctrl-btn:nth-child(3) { grid-column: 2; grid-row: 2; }
+.ctrl-btn:nth-child(4) { grid-column: 3; grid-row: 2; }
 
-/* Показывать только на мобильных */
 @media (max-width: 768px) {
   .mobile-controls {
     display: grid;
   }
 }
 
-/* Скрываем на десктопе */
 @media (min-width: 769px) {
   .mobile-controls {
     display: none;
@@ -154,7 +203,6 @@ button:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -168,6 +216,14 @@ button:hover {
   opacity: 1;
   visibility: visible;
   transition: opacity 0.5s ease;
+}
+
+.light-theme .victory-screen {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+}
+
+.dark-theme .victory-screen {
+  background: linear-gradient(135deg, #373737 0%, #111 100%);
 }
 
 .victory-content {
@@ -186,10 +242,17 @@ button:hover {
   margin-bottom: 10px;
 }
 
+.dark-theme .victory-content h2 {
+  color: #66bb6a;
+}
+
 .victory-content p {
   font-size: 18px;
   color: #555;
-  margin: 10px 0;
+}
+
+.dark-theme .victory-content p {
+  color: #ccc;
 }
 
 #play-again {
