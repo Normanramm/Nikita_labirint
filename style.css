@@ -83,3 +83,51 @@ button {
 button:hover {
   background-color: #388e3c;
 }
+
+/* Мобильное управление */
+.mobile-controls {
+  display: none; /* Скрыто по умолчанию */
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 8px;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  border-radius: 20px;
+  z-index: 100;
+}
+
+.ctrl-btn {
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+.ctrl-btn:active {
+  background-color: #1976d2;
+}
+
+.ctrl-btn:nth-child(1) { grid-column: 2; grid-row: 1; } /* Вверх */
+.ctrl-btn:nth-child(2) { grid-column: 1; grid-row: 2; } /* Влево */
+.ctrl-btn:nth-child(3) { grid-column: 2; grid-row: 2; } /* Вниз */
+.ctrl-btn:nth-child(4) { grid-column: 3; grid-row: 2; } /* Вправо */
+
+/* Показывать только на маленьких экранах */
+@media (max-width: 768px) {
+  .mobile-controls {
+    display: grid;
+  }
+}
