@@ -23,7 +23,6 @@ function initGame() {
   steps = 0;
   gameWon = false;
   document.getElementById("steps").textContent = steps;
-  document.getElementById("message").textContent = "";
   renderMaze();
 }
 
@@ -83,7 +82,8 @@ function movePlayer(dx, dy) {
 
     if (maze[newY][newX] === 'E') {
       gameWon = true;
-      document.getElementById("message").textContent = "🎉 Поздравляю! ты додик-гей!";
+      document.getElementById("final-steps").textContent = steps;
+      document.getElementById("victory-screen").classList.add("visible");
     }
 
     renderMaze();
@@ -124,7 +124,7 @@ function setupMobileControls() {
   const handleLeft = () => movePlayer(-1, 0);
   const handleRight = () => movePlayer(1, 0);
 
-  // touchstart — основное событие для мобильных
+  // touchstart
   upBtn.addEventListener("touchstart", (e) => {
     e.preventDefault();
     handleUp();
@@ -142,18 +142,71 @@ function setupMobileControls() {
     handleRight();
   });
 
-  // click — для планшетов и десктопных браузеров
+  // click (для теста на ПК)
   upBtn.addEventListener("click", handleUp);
   downBtn.addEventListener("click", handleDown);
   leftBtn.addEventListener("click", handleLeft);
   rightBtn.addEventListener("click", handleRight);
 }
 
+// Сделать блок управления перетаскиваемым
+function makeDraggable(element) {
+  let pos = { x: 0, y: 0, startX: 0, startY: 0 };
+
+  element.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    pos.startX = touch.clientX;
+    pos.startY = touch.clientY;
+    pos.x = element.offsetLeft;
+    pos.y = element.offsetTop;
+    element.style.opacity = "0.8";
+  }, { passive: false });
+
+  element.addEventListener("touchmove", (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    let dx = touch.clientX - pos.startX;
+    let dy = touch.clientY - pos.startY;
+
+    const maxX = window.innerWidth - element.offsetWidth;
+    const maxY = window.innerHeight - element.offsetHeight;
+
+    let newX = pos.x + dx;
+    let newY = pos.y + dy;
+
+    newX = Math.max(0, Math.min(newX, maxX));
+    newY = Math.max(0, Math.min(newY, maxY));
+
+    element.style.left = newX + "px";
+    element.style.top = newY + "px";
+    element.style.bottom = "auto";
+    element.style.right = "auto";
+  }, { passive: false });
+
+  element.addEventListener("touchend", () => {
+    element.style.opacity = "1";
+    element.style.left = element.offsetLeft + "px";
+    element.style.top = element.offsetTop + "px";
+    element.style.bottom = "auto";
+    element.style.right = "auto";
+  });
+}
+
 // Кнопка "Начать заново"
-document.getElementById("restart").addEventListener("click", initGame);
+document.getElementById("restart").addEventListener("click", () => {
+  initGame();
+});
+
+// Кнопка "Играть снова"
+document.getElementById("play-again").addEventListener("click", () => {
+  document.getElementById("victory-screen").classList.remove("visible");
+  initGame();
+});
 
 // Запуск игры
 window.onload = function () {
   initGame();
   setupMobileControls();
+  makeDraggable(document.querySelector(".mobile-controls"));
 };
