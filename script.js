@@ -83,14 +83,14 @@ function movePlayer(dx, dy) {
 
     if (maze[newY][newX] === 'E') {
       gameWon = true;
-      document.getElementById("message").textContent = "🎉 Поздравляю!Ты додик-гей!";
+      document.getElementById("message").textContent = "🎉 Поздравляю! ты додик-гей!";
     }
 
     renderMaze();
   }
 }
 
-// Обработка клавиш
+// Обработка клавиш (ПК)
 document.addEventListener("keydown", (e) => {
   switch (e.key) {
     case "ArrowUp":
@@ -112,21 +112,48 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+// Мобильное управление
+function setupMobileControls() {
+  const upBtn = document.getElementById("up");
+  const downBtn = document.getElementById("down");
+  const leftBtn = document.getElementById("left");
+  const rightBtn = document.getElementById("right");
+
+  const handleUp = () => movePlayer(0, -1);
+  const handleDown = () => movePlayer(0, 1);
+  const handleLeft = () => movePlayer(-1, 0);
+  const handleRight = () => movePlayer(1, 0);
+
+  // touchstart — основное событие для мобильных
+  upBtn.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    handleUp();
+  });
+  downBtn.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    handleDown();
+  });
+  leftBtn.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    handleLeft();
+  });
+  rightBtn.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    handleRight();
+  });
+
+  // click — для планшетов и десктопных браузеров
+  upBtn.addEventListener("click", handleUp);
+  downBtn.addEventListener("click", handleDown);
+  leftBtn.addEventListener("click", handleLeft);
+  rightBtn.addEventListener("click", handleRight);
+}
+
 // Кнопка "Начать заново"
 document.getElementById("restart").addEventListener("click", initGame);
 
-// Управление с кнопок на телефоне
-document.getElementById("up").addEventListener("click", () => movePlayer(0, -1));
-document.getElementById("down").addEventListener("click", () => movePlayer(0, 1));
-document.getElementById("left").addEventListener("click", () => movePlayer(-1, 0));
-document.getElementById("right").addEventListener("click", () => movePlayer(1, 0));
-
-// Отключаем скролл при нажатии на кнопки
-document.querySelectorAll('.ctrl-btn').forEach(btn => {
-  btn.addEventListener('touchstart', e => {
-    e.preventDefault(); // Предотвращаем скролл
-  });
-});
-
-// Запуск игры при загрузке
-window.onload = initGame;
+// Запуск игры
+window.onload = function () {
+  initGame();
+  setupMobileControls();
+};
